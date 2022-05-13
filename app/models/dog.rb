@@ -1,3 +1,3 @@
 class Dog < ApplicationRecord
-    validates :name, :age, presence: true
+    validates :name, :age, :enjoys, presence: true
 end

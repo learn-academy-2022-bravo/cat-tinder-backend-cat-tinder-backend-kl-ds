@@ -9,4 +9,8 @@ RSpec.describe Dog, type: :model do
     dog = Dog.create
     expect(dog.errors[:age]).to_not be_empty
   end
+  it "should validate a enjoys" do
+    dog = Dog.create
+    expect(dog.errors[:enjoys]).to_not be_empty
+  end
 end
