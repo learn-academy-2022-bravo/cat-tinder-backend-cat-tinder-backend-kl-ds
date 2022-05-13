@@ -63,4 +63,66 @@ RSpec.describe "Dogs", type: :request do
       expect(updated_dog.age).to eq(3)
     end
   end
+  describe 'Dog create request validations' do
+    it "doesn't create a dog without a name" do
+      dog_params = {
+        dog: {
+          age: 2,
+          enjoys: 'allll the attention',
+          image: 'http://www.catpics.com'
+        }
+      }
+      post '/dogs', params: dog_params
+      # expect(response.status).to eq 422
+      expect(response).to have_http_status(422)
+
+      json = JSON.parse(response.body)
+      expect(json['name']).to include "can't be blank"
+    end
+    it "doesn't create a dog without a age" do
+      dog_params = {
+        dog: {
+          name: 'Toast',
+          enjoys: 'allll the attention',
+          image: 'http://www.catpics.com'
+        }
+      }
+      post '/dogs', params: dog_params
+      # expect(response.status).to eq 422
+      expect(response).to have_http_status(422)
+
+      json = JSON.parse(response.body)
+      expect(json['age']).to include "can't be blank"
+    end
+    it "doesn't create a dog without a enjoys" do
+      dog_params = {
+        dog: {
+          name: 'Toast',
+          age: 2,
+          image: 'http://www.catpics.com'
+        }
+      }
+      post '/dogs', params: dog_params
+      # expect(response.status).to eq 422
+      expect(response).to have_http_status(422)
+
+      json = JSON.parse(response.body)
+      expect(json['enjoys']).to include "can't be blank"
+    end
+    it "doesn't create a dog without a image" do
+      dog_params = {
+        dog: {
+          name: 'Toast',
+          age: 2,
+          enjoys: 'allll the attention'
+        }
+      }
+      post '/dogs', params: dog_params
+      # expect(response.status).to eq 422
+      expect(response).to have_http_status(422)
+
+      json = JSON.parse(response.body)
+      expect(json['image']).to include "can't be blank"
+    end
+  end
 end

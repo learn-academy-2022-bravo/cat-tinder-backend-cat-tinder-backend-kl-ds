@@ -6,7 +6,11 @@ class DogsController < ApplicationController
     
       def create
         dog = Dog.create(dog_params)
-        render json: dog
+        if dog.valid?
+          render json: dog
+        else
+          render json: dog.errors, status: 422
+        end
       end
     
       def update
