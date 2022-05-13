@@ -63,6 +63,26 @@ RSpec.describe "Dogs", type: :request do
       expect(updated_dog.age).to eq(3)
     end
   end
+
+  describe "DELETE /destroy" do
+    it 'can delete an existing dog' do
+      dog_params = {
+        dog: {
+          name: 'Toast',
+          age: 2,
+          enjoys: 'allll the attention',
+          image: 'http://www.catpics.com'
+        }
+      }
+      post '/dogs', params: dog_params
+      dog = Dog.first
+      delete "/dogs/#{dog.id}"
+      dog = Dog.all
+      expect(response).to have_http_status(200)
+      expect(dog).to be_empty
+    end
+  end
+
   describe 'Dog create request validations' do
     it "doesn't create a dog without a name" do
       dog_params = {
